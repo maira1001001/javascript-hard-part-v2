@@ -123,28 +123,27 @@ afterCalled(); // => nothing is printed
 
 // CHALLENGE 6
 function delay(func, wait) {
-  return (input) => setTimeout(func, wait, input);
+  return (...args) => setTimeout(func, wait, ...args);
 }
 
 console.log('delay(func), wait');
-const printTheFuture = (mision) => console.log(`${mision} e doppio?`);
-const myVision = delay(printTheFuture, 9000);
-myVision('me ne vado a milano l anno prossimo');
+const printTheFuture = (mission, vision) =>
+  console.log(`${mission} e doppio?, ${vision}`);
+const myMission = delay(printTheFuture, 3000);
+myMission('me ne vado a milano l anno prossimo', 'my vision');
 
 // CHALLENGE 7
 function rollCall(names) {
-  let position = 0;
   return () => {
-    if (position < names.length) {
-      console.log(names[position]);
-      position++;
+    if (names.length) {
+      console.log(names.shift());
     } else console.log('Everyone accounted for');
   };
 }
 
 // /*** Uncomment these to check your work! ***/
 console.log('rollCall(name)');
-const rollCaller = rollCall(['Victoria', 'Juan', 'Ruth']);
+const rollCaller = rollCall(['Juan', 'Victoria', 'Ruth']);
 rollCaller(); // => should log 'Juan'
 rollCaller(); // => should log 'Victoria'
 rollCaller(); // => should log 'Ruth'
