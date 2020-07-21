@@ -1,5 +1,7 @@
 /** @format */
 
+const { type } = require('os');
+
 // Type JavaScript here and click "Run Code" or press Ctrl + s
 console.log('Hello, world!');
 
@@ -23,7 +25,11 @@ console.log(addS('bagel'));
 
 // Challenge 3
 function map(array, callback) {
-  return array.map((each) => callback(each));
+  let mappedArray = [];
+  for (let i = 0; i < array.length; i++) {
+    mappedArray.push(callback(array[i]));
+  }
+  return mappedArray;
 }
 
 console.log(map([1, 2, 3], addTwo));
@@ -42,9 +48,9 @@ console.log('alphabet:', alphabet);
 
 // Challenge 5
 function mapWith(array, callback) {
-  let result = [];
-  forEach(array, (each) => result.push(callback(each)));
-  return result;
+  let mappedArray = [];
+  forEach(array, (each) => mappedArray.push(callback(each)));
+  return mappedArray;
 }
 
 console.log(mapWith(letters, addS));
@@ -58,11 +64,6 @@ function reduce(array, callback, initialValue) {
   // }
   return accumulator;
 }
-
-function include(elem, array) {
-  return reduce(array, (acc, each) => acc || each === elem, false);
-}
-console.log('include', include([1, 2], 3));
 
 /*
 using forEach function, excution steps
@@ -83,51 +84,32 @@ const pushAndReturn = (array, elem) => {
   return array;
 };
 
-const intersectionBetween = (a, b) => {
-  return reduce(
-    a,
-    (acc, each) =>
-      /* { 
-    	if(!b.includes(each) || acc.includes(each)) { return acc }
-      else { acc.push(each); return acc }
-    } */
-      ((!b.includes(each) || acc.includes(each)) && acc) ||
-      pushAndReturn(acc, each),
-    []
-  );
-};
-
 // Challenge 7
-function intersection(...arrays) {
-  let initialSet = arrays.shift();
-  return reduce(
-    arrays,
-    (acc, eachSet) => intersectionBetween(eachSet, acc),
-    initialSet
+function intersection(arrays) {
+  return arrays.reduce((acc, currentArray) =>
+    currentArray.filter((each) => acc.includes(each))
   );
 }
 
 console.log(
   'intersections',
-  intersection([5, 10, 15, 20], [15, 88, 1, 5, 7], [1, 10, 15, 5, 20])
+  intersection([
+    [5, 10, 15, 20],
+    [15, 88, 1, 5, 7],
+    [1, 10, 15, 5, 20],
+  ])
 );
 // should log: [5, 15]
 
 // Challenge 8
-function union(...arrays) {
-  let initialSet = arrays.shift();
-  return reduce(arrays, (acc, eachSet) => unionBetween(eachSet, acc), []);
+function union(arrays) {
+  return arrays.reduce((acc, currentArray) => {
+    const newElements = currentArray.filter((each) => !acc.includes(each));
+    return acc.concat(newElements);
+  });
 }
 
-function unionBetween(firstSet, secondSet) {
-  return reduce(
-    firstSet,
-    (acc, each) => (!acc.includes(each) && pushAndReturn(acc, each)) || acc,
-    secondSet
-  );
-}
-
-console.log(union([5, 10, 15], [15, 88, 1, 5, 7], [100, 15, 10, 1, 5]));
+// console.log(union([[5, 10, 15], [15, 88, 1, 5, 7], [100, 15, 10, 1, 5]]));
 // should log: [5, 10, 15, 88, 1, 7, 100]
 
 // Challenge 9
