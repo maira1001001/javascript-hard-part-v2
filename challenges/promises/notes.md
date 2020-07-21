@@ -35,3 +35,10 @@ The order matters...
 3. at the end, callback queue will be executed
 
 Prioritize functions in the microtask queue over the Callback queue
+
+## Jack Archibal video
+
+[Javascript microtask quiz](https://www.youtube.com/watch?v=Lum0R6Ng6R8)
+
+1. Microtask is run when tha Javascript stack is empty
+2. And promises queue microtasks
