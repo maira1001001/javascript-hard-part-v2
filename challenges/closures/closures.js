@@ -159,7 +159,7 @@ function saveOutput(func, magicWord) {
       return result;
     } else {
       result[input] = func(input);
-      return input;
+      return result[input];
     }
   };
 }
